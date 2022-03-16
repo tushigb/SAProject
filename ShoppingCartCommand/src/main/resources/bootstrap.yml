@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: shopping-cart-command-service
+  config:
+    import: configserver:http://localhost:8888
+  kafka:
+    producer:
+      properties:
+        acks: 1
+        spring:
+          json:
+            add:
+              type:
+                headers: false
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
