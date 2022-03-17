@@ -3,6 +3,7 @@ package edu.miu.customer.controller;
 import edu.miu.customer.dto.request.CustomerDTO;
 import edu.miu.customer.exception.BusinessException;
 import edu.miu.customer.service.CustomerService;
+import edu.miu.customer.service.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +20,9 @@ public class CustomerController {
 
     @Autowired
     CustomerService service;
+
+    @Autowired
+    EmailService emailService;
 
     @RequestMapping(value = "", method = RequestMethod.POST)
     public ResponseEntity<?> add(@RequestBody CustomerDTO customerDTO) {
@@ -44,6 +48,12 @@ public class CustomerController {
     @RequestMapping(value = "{customerId}", method = RequestMethod.PUT)
     public ResponseEntity<?> update(@PathVariable String customerId, @RequestBody CustomerDTO customerDTO) throws BusinessException {
         return ResponseEntity.ok(service.update(customerId, customerDTO));
+    }
+
+    @RequestMapping(value = "email/send/{customerId}/{orderId}", method = RequestMethod.GET)
+    public ResponseEntity<?> sendEmail(@PathVariable String customerId, @PathVariable String orderId) throws BusinessException{
+        emailService.sendEmail(customerId, orderId);
+        return ResponseEntity.ok(null);
     }
 
 }

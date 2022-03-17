@@ -71,6 +71,7 @@ public class CartServiceImpl implements CartService {
                 if (item.getProduct().getProductNumber().equals(productNumber))
                     item.setQuantity(quantity);
             });
+            repository.save(cart);
             kafkaTemplate.send("shopping_cart", get(id));
             return cart;
         }

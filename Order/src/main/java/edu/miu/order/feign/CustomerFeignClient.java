@@ -18,4 +18,7 @@ public interface CustomerFeignClient {
     @RequestMapping(value = "{customerId}", method = RequestMethod.GET)
     Customer getCustomer(@PathVariable("customerId") String customerId);
 
+    @RequestMapping(value = "email/send/{customerId}/{orderId}", method = RequestMethod.GET)
+    void sendEmail(@PathVariable("customerId") String customerId, @PathVariable("orderId") String orderId);
+
 }
